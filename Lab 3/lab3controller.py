@@ -33,7 +33,7 @@ class Firewall (object):
             # few entries of dump--flows from timeout
         	msg.idle_timeout = 25  # 50
         	msg.hard_timeout = 50  # 100
-        	
+
         	isARP = packet.find('arp')
         	isTCP = packet.find('tcp')
         	isICMP = packet.find('icmp')
