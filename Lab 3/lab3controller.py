@@ -38,7 +38,7 @@ class Firewall (object):
     	protocol_ARP = packet.find('arp')
     	protocol_ICMP = packet.find('icmp')
 
-    	# ARP, TCP, or ICMP Check
+    	# Check Protocol
 
         ### TCP Check ##########################################################
         if protocol_TCP is not None:
@@ -51,9 +51,9 @@ class Firewall (object):
                 msg.data = packet_in
 
                 # Check if TCP type
-                msg.nw_proto = 6                                                ###-*-###
+                msg.nw_proto = 6                                                ###-1-###
 
-                # Action to send to specified port                              ###-*-###
+                # Action to send to specified port                              ###-2-###
                 action = of.ofp_action_output(port = of.OFPP_FLOOD)
                 msg.actions.append(action)
 
@@ -73,9 +73,9 @@ class Firewall (object):
             msg.data = packet_in
 
             # Check if ARP type
-            msg.match.dl_type = 0x0806                                          ###-*-###
+            msg.match.dl_type = 0x0806                                          ###-1-###
 
-            # Action to send to specified port                                  ###-*-###
+            # Action to send to specified port                                  ###-2-###
             action = of.ofp_action_output(port = of.OFPP_FLOOD)
             msg.actions.append(action)
 
@@ -96,9 +96,9 @@ class Firewall (object):
                 msg.data = packet_in
 
                 # Check if ICMP type
-                msg.nw_proto = 1                                                ###-*-###
+                msg.nw_proto = 1                                                ###-1-###
 
-                # Action to send to specified port                              ###-*-###
+                # Action to send to specified port                              ###-2-###
                 action = of.ofp_action_output(port = of.OFPP_FLOOD)
                 msg.actions.append(action)
 
