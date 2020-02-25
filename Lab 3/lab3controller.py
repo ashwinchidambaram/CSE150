@@ -47,7 +47,7 @@ class Firewall (object):
             protocol_IPv4 = packet.find('ipv4')
 
             # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
-            if (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.20') or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.30') or or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.40') or (protocol_IPv4.srcip == '10.0.1.20' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.20' and protocol_IPv4.dstip == '10.0.1.30') or (protocol_IPv4.srcip == '10.0.1.20' and protocol_IPv4.dstip == '10.0.1.40') or (protocol_IPv4.srcip == '10.0.1.30' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.30' and protocol_IPv4.dstip == '10.0.1.20') or (protocol_IPv4.srcip == '10.0.1.30' and protocol_IPv4.dstip == '10.0.1.40') or (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.20') or (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.30'):
+            if (protocol_IPv4.srcip == ('10.0.1.10' or '10.0.1.20' or '10.0.1.30' or '10.0.1.40') and protocol_IPv4.dstip == ('10.0.1.10' or '10.0.1.20' or '10.0.1.30' or '10.0.1.40')):
 
                 # Take in data packet
                 msg.data = packet_in
