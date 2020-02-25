@@ -34,8 +34,8 @@ class Firewall (object):
     	msg.idle_timeout = idle_timeout
     	msg.hard_timeout = hard_timeout
 
-    	protocol_ARP = packet.find('arp')
     	protocol_TCP = packet.find('tcp')
+    	protocol_ARP = packet.find('arp')
     	protocol_ICMP = packet.find('icmp')
 
     	# ARP, TCP, or ICMP Check
@@ -46,7 +46,6 @@ class Firewall (object):
             # Check if IPv4
             protocol_IPv4 = packet.find('ipv4')
 
-            # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
             if protocol_IPv4 is not None:
                 # Take in data packet
                 msg.data = packet_in
