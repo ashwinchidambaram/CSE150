@@ -47,36 +47,7 @@ class Firewall (object):
             protocol_IPv4 = packet.find('ipv4')
 
             # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
-            if (protocol_IPv4.srcip == ('10.0.1.10' or '10.0.1.20' or '10.0.1.30' or '10.0.1.40') and protocol_IPv4.dstip == ('10.0.1.10' or '10.0.1.20' or '10.0.1.30' or '10.0.1.40')):
-
-                # Take in data packet
-                msg.data = packet_in
-
-                # Check if TCP type
-                msg.nw_proto = 6                                                ###-*-###
-
-                # Action to send to specified port                              ###-*-###
-                action = of.ofp_action_output(port = of.OFPP_FLOOD)
-                msg.actions.append(action)
-
-                # Send message to switch
-                self.connection.send(msg)
-
-            # If source/destination IP don't match condition, then just direct to switch
-            else:
-                # Send message to switch
-                self.connection.send(msg)
-
-
-        ### ICMP Check #########################################################
-        elif protocol_ICMP is not None:
-
-            # Check if IPv4
-            protocol_IPv4 = packet.find('ipv4')
-
-            # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
-            if (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.40'):
-
+            if protocol_IPv4 is not None:
                 # Take in data packet
                 msg.data = packet_in
 
@@ -103,7 +74,7 @@ class Firewall (object):
             msg.data = packet_in
 
             # Check if ARP type
-            msg.match.dl_type = 0x8086                                          ###-*-###
+            msg.match.dl_type = 0x0806                                          ###-*-###
 
             # Action to send to specified port                                  ###-*-###
             action = of.ofp_action_output(port = of.OFPP_FLOOD)
@@ -111,6 +82,34 @@ class Firewall (object):
 
             # Send message to switch
             self.connection.send(msg)
+
+
+        ### ICMP Check #########################################################
+        elif protocol_ICMP is not None:
+
+            # Check if IPv4
+            protocol_IPv4 = packet.find('ipv4')
+
+            # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
+            if (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.40'):
+
+                # Take in data packet
+                msg.data = packet_in
+
+                # Check if ICMP type
+                msg.nw_proto = 1                                                ###-*-###
+
+                # Action to send to specified port                              ###-*-###
+                action = of.ofp_action_output(port = of.OFPP_FLOOD)
+                msg.actions.append(action)
+
+                # Send message to switch
+                self.connection.send(msg)
+
+            # If source/destination IP don't match condition, then just direct to switch
+            else:
+                # Send message to switch
+                self.connection.send(msg)
 
 
         ######################################################################
