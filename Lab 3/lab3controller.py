@@ -40,25 +40,8 @@ class Firewall (object):
 
     	# ARP, TCP, or ICMP Check
 
-        #### ARP Check #########################################################
-        if protocol_ARP is not None:
-
-            # Take in data packet
-            msg.data = packet_in
-
-            # Check if ARP type
-            msg.match.dl_type = 0x8086                                          ###-*-###
-
-            # Action to send to specified port                                  ###-*-###
-            action = of.ofp_action_output(port = of.OFPP_FLOOD)
-            msg.actions.append(action)
-
-            # Send message to switch
-            self.connection.send(msg)
-
-
         ### TCP Check ##########################################################
-        elif protocol_TCP is not None:
+        if protocol_TCP is not None:
 
             # Check if IPv4
             protocol_IPv4 = packet.find('ipv4')
@@ -102,11 +85,26 @@ class Firewall (object):
             self.connection.send(msg)
 
 
-        ########################################################################
+        #### ARP Check #########################################################
+        elif protocol_ARP is not None:
+
+            # Take in data packet
+            msg.data = packet_in
+
+            # Check if ARP type
+            msg.match.dl_type = 0x8086                                          ###-*-###
+
+            # Action to send to specified port                                  ###-*-###
+            action = of.ofp_action_output(port = of.OFPP_FLOOD)
+            msg.actions.append(action)
+
+            # Send message to switch
+            self.connection.send(msg)
+
+
+        ######################################################################
         else:
 		self.connection.send(msg)
-
-	###################################################
 
   def _handle_PacketIn (self, event):
 	"""
