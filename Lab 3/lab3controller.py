@@ -21,6 +21,7 @@ class Firewall (object):
     	connection.addListeners(self)
 
     def do_firewall(self, packet, packet_in):
+
         # Variables
         idle_timeout = 30                                                       # Time taken to timeout in seconds
         hard_timeout = 60                                                       # Max time taken to timeout in seconds
@@ -51,7 +52,7 @@ class Firewall (object):
                 msg.data = packet_in
 
                 # Check if TCP type
-                msg.nw_proto = 6                                                ###-1-###
+                msg.IP_PROTO = 6                                                ###-1-###
 
                 # Action to send to specified port                              ###-2-###
                 action = of.ofp_action_output(port = of.OFPP_FLOOD)
@@ -73,7 +74,7 @@ class Firewall (object):
             msg.data = packet_in
 
             # Check if ARP type
-            msg.match.dl_type = 0x0806                                          ###-1-###
+            msg.match.ETH_TYPE = 0x0806                                          ###-1-###
 
             # Action to send to specified port                                  ###-2-###
             action = of.ofp_action_output(port = of.OFPP_FLOOD)
@@ -96,7 +97,7 @@ class Firewall (object):
                 msg.data = packet_in
 
                 # Check if ICMP type
-                msg.nw_proto = 1                                                ###-1-###
+                msg.IP_PROTO = 1                                                ###-1-###
 
                 # Action to send to specified port                              ###-2-###
                 action = of.ofp_action_output(port = of.OFPP_FLOOD)
