@@ -43,23 +43,18 @@ class Firewall (object):
         ### TCP Check ##########################################################
         if protocol_TCP is not None:
 
-            # Check if IPv4
-            protocol_IPv4 = packet.find('ipv4')
+            # Take in data packet
+            msg.data = packet_in
 
-            if protocol_IPv4 is not None:
+            # Check if ARP type
+            msg.match.nw_proto = 6                                              ###-*-###
 
-                msg.data = packet_in
+            # Action to send to specified port                                  ###-*-###
+            action = of.ofp_action_output(port = of.OFPP_FLOOD)
+            msg.actions.append(action)
 
-                # Action to send to specified port                              ###-*-###
-                action = of.ofp_action_output(port = of.OFPP_FLOOD)
-                msg.actions.append(action)
-
-                # Send message to switch
-                self.connection.send(msg)
-
-            else:
-                # Send message to switch
-                self.connection.send(msg)
+            # Send message to switch
+            self.connection.send(msg)
 
 
         ### ICMP Check #########################################################
@@ -89,11 +84,6 @@ class Firewall (object):
                 # Send message to switch
                 self.connection.send(msg)
 
-            # If source/destination IP don't match condition, then just direct to switch
-            else:
-                # Send message to switch
-                self.connection.send(msg)
-
 
         #### ARP Check #########################################################
         elif protocol_ARP is not None:
@@ -103,6 +93,13 @@ class Firewall (object):
 
             # Check if ARP type
             msg.match.dl_type = 0x8086                                          ###-*-###
+
+            # Action to send to specified port                                  ###-*-###
+            action = of.ofp_action_output(port = of.OFPP_FLOOD)
+            msg.actions.append(action)
+
+            # Send message to switch
+            self.connection.send(msg)
 
 
         ######################################################################
