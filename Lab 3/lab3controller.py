@@ -43,19 +43,27 @@ class Firewall (object):
         ### TCP Check ##########################################################
         if protocol_TCP is not None:
 
-            # Take in data packet
-            msg.data = packet_in
+            # Check if IPv4
+            protocol_IPv4 = packet.find('ipv4')
 
-            # Check if ARP type
-            msg.match.nw_proto = 6                                              ###-*-###
+            if protocol_IPv4 is not None:
+                # Take in data packet
+                msg.data = packet_in
 
-            # Action to send to specified port                                  ###-*-###
-            action = of.ofp_action_output(port = of.OFPP_FLOOD)
-            msg.actions.append(action)
+                # Check if ARP type
+                msg.match.nw_proto = 6                                              ###-*-###
 
-            # Send message to switch
-            self.connection.send(msg)
+                # Action to send to specified port                                  ###-*-###
+                action = of.ofp_action_output(port = of.OFPP_FLOOD)
+                msg.actions.append(action)
 
+                # Send message to switch
+                self.connection.send(msg)
+
+            else:
+                # Send message to switch
+                self.connection.send(msg)
+                
 
         ### ICMP Check #########################################################
         elif protocol_ICMP is not None:
