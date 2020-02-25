@@ -106,27 +106,20 @@ class Firewall (object):
         else:
 		self.connection.send(msg)
 
-  def _handle_PacketIn (self, event):
-	"""
-	Handles packet in messages from the switch.
-	"""
+    def _handle_PacketIn (self, event):
+        packet = event.parsed # This is the parsed packet data.
+        if not packet.parsed:
+            log.warning("Ignoring incomplete packet")
+            return
 
-	packet = event.parsed # This is the parsed packet data.
-	if not packet.parsed:
-	  log.warning("Ignoring incomplete packet")
-	  return
-
-	packet_in = event.ofp # The actual ofp_packet_in message.
-	self.do_firewall(packet, packet_in)
+        packet_in = event.ofp # The actual ofp_packet_in message.
+        self.do_firewall(packet, packet_in)
 
 def launch ():
-  """
-  Starts the component
-  """
-  def start_switch (event):
-	log.debug("Controlling %s" % (event.connection,))
-	Firewall(event.connection)
-  core.openflow.addListenerByName("ConnectionUp", start_switch)
+    def start_switch (event):
+        log.debug("Controlling %s" % (event.connection,))
+        Firewall(event.connection)
+    core.openflow.addListenerByName("ConnectionUp", start_switch)
 
 
 
