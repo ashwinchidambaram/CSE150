@@ -3,6 +3,7 @@
 ############################################
 ## Ashwin Chidambaram                     ##
 ## 02/22/2020                             ##
+## lab3controller.py                      ##
 ############################################
 
 from pox.core import core
@@ -10,7 +11,6 @@ import pox.openflow.libopenflow_01 as of
 
 log = core.getLogger()
 
-############################################
 class Firewall (object):
     def __init__(self, connection):
         # Keep track of the connection to the switch so that we can
@@ -46,8 +46,30 @@ class Firewall (object):
             # Check if IPv4
             protocol_IPv4 = packet.find('ipv4')
 
+            if protocol_IPv4 is not None:
+
+                msg.data = packet_in
+
+                # Action to send to specified port                              ###-*-###
+                action = of.ofp_action_output(port = of.OFPP_FLOOD)
+                msg.actions.append(action)
+
+                # Send message to switch
+                self.connection.send(msg)
+
+            else:
+                # Send message to switch
+                self.connection.send(msg)
+
+
+        ### ICMP Check #########################################################
+        elif protocol_ICMP is not None:
+
+            # Check if ICMP type
+            msg.IP_PROTO = 1                                                    ###-*-###
+
             # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
-            if (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.40'):
+            if (protocol_ICMP.srcip == '10.0.1.40' and protocol_ICMP.dstip == '10.0.1.10') or (protocol_ICMP.srcip == '10.0.1.10' and protocol_ICMP.dstip == '10.0.1.40'):
 
                 # Take in data packet
                 msg.data = packet_in
@@ -68,23 +90,6 @@ class Firewall (object):
                 self.connection.send(msg)
 
 
-        ### ICMP Check #########################################################
-        elif protocol_ICMP is not None:
-
-            # Take in data packet
-            msg.data = packet_in
-
-            # Check if TCP type
-            msg.IP_PROTO = 1                                                    ###-*-###
-
-            # Action to send to specified port                                  ###-*-###
-            action = of.ofp_action_output(port = of.OFPP_FLOOD)
-            msg.actions.append(action)
-
-            # Send message to switch
-            self.connection.send(msg)
-
-
         #### ARP Check #########################################################
         elif protocol_ARP is not None:
 
@@ -94,15 +99,9 @@ class Firewall (object):
             # Check if ARP type
             msg.match.dl_type = 0x8086                                          ###-*-###
 
-            # Action to send to specified port                                  ###-*-###
-            action = of.ofp_action_output(port = of.OFPP_FLOOD)
-            msg.actions.append(action)
-
-            # Send message to switch
-            self.connection.send(msg)
-
 
         ######################################################################
+
         else:
 		self.connection.send(msg)
 
@@ -122,10 +121,8 @@ def launch ():
     core.openflow.addListenerByName("ConnectionUp", start_switch)
 
 
-
-
-  ############# Sources Utilized ###############################################
-  ## http://sdnhub.org/tutorials/pox/
-  ## http://flowgrammable.org/sdn/openflow/classifiers/
-  ## https://openflow.stanford.edu/display/ONL/POX+Wiki.html#POXWiki-Example%3AInstallingatableentry
-  ##
+##### Sources Utilized ##############################################################################
+##-1-## http://flowgrammable.org/sdn/openflow/classifiers/                                         ##
+##-2-## http://sdnhub.org/tutorials/pox/                                                           ##
+## https://openflow.stanford.edu/display/ONL/POX+Wiki.html#POXWiki-Example%3AInstallingatableentry ##
+#####################################################################################################
