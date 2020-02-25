@@ -65,11 +65,11 @@ class Firewall (object):
         ### ICMP Check #########################################################
         elif protocol_ICMP is not None:
 
-            # Check if ICMP type
-            msg.IP_PROTO = 1                                                    ###-*-###
+            # Check if IPv4
+            protocol_IPv4 = packet.find('ipv4')
 
             # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
-            if (protocol_ICMP.srcip == '10.0.1.40' and protocol_ICMP.dstip == '10.0.1.10') or (protocol_ICMP.srcip == '10.0.1.10' and protocol_ICMP.dstip == '10.0.1.40'):
+            if (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.40'):
 
                 # Take in data packet
                 msg.data = packet_in
@@ -81,6 +81,11 @@ class Firewall (object):
                 action = of.ofp_action_output(port = of.OFPP_FLOOD)
                 msg.actions.append(action)
 
+                # Send message to switch
+                self.connection.send(msg)
+
+            # If source/destination IP don't match condition, then just direct to switch
+            else:
                 # Send message to switch
                 self.connection.send(msg)
 
