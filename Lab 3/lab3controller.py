@@ -46,24 +46,27 @@ class Firewall (object):
             # Check if IPv4
             protocol_IPv4 = packet.find('ipv4')
 
-            if protocol_IPv4 is not None:
+            # Determine if traffic flow from 10.0.1.40 to 10.0.1.10 or vice versa
+            if (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.20') or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.30') or or (protocol_IPv4.srcip == '10.0.1.10' and protocol_IPv4.dstip == '10.0.1.40') or (protocol_IPv4.srcip == '10.0.1.20' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.20' and protocol_IPv4.dstip == '10.0.1.30') or (protocol_IPv4.srcip == '10.0.1.20' and protocol_IPv4.dstip == '10.0.1.40') or (protocol_IPv4.srcip == '10.0.1.30' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.30' and protocol_IPv4.dstip == '10.0.1.20') or (protocol_IPv4.srcip == '10.0.1.30' and protocol_IPv4.dstip == '10.0.1.40') or (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.10') or (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.20') or (protocol_IPv4.srcip == '10.0.1.40' and protocol_IPv4.dstip == '10.0.1.30'):
+
                 # Take in data packet
                 msg.data = packet_in
 
-                # Check if ARP type
-                msg.match.nw_proto = 6                                              ###-*-###
+                # Check if TCP type
+                msg.nw_proto = 6                                                ###-*-###
 
-                # Action to send to specified port                                  ###-*-###
+                # Action to send to specified port                              ###-*-###
                 action = of.ofp_action_output(port = of.OFPP_FLOOD)
                 msg.actions.append(action)
 
                 # Send message to switch
                 self.connection.send(msg)
 
+            # If source/destination IP don't match condition, then just direct to switch
             else:
                 # Send message to switch
                 self.connection.send(msg)
-                
+
 
         ### ICMP Check #########################################################
         elif protocol_ICMP is not None:
