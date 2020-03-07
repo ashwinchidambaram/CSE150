@@ -35,19 +35,19 @@ class MyTopology(Topo):
         self.addLink(host2, switch2)                                            ## Link             [h2] to [s2]
 
         host3 = self.addHost('h3')                                              ## Adds a Host      [h3]
-        self.addLink(host3, switch1)                                            ## Link             [h3] to [s1]
+        self.addLink(host3, switch3)                                            ## Link             [h3] to [s1]
 
         host4 = self.addHost('h4')                                              ## Adds a Host      [h4]
-        self.addLink(host4, switch2)                                            ## Link             [h4] to [s2]
+        self.addLink(host4, switch4)                                            ## Link             [h4] to [s2]
 
         host5 = self.addHost('h5')                                              ## Adds a Host      [h5]
-        self.addLink(host5, switch3)                                            ## Link             [h5] to [s3]
+        self.addLink(host5, switch5)                                            ## Link             [h5] to [s3]
 
-        host6 = self.addHost('h6')                                              ## Adds a Host      [h6]
-        self.addLink(host6, switch3)                                            ## Link             [h6] to [s3]
+        self.addLink(switch1, switch4)                                          ## addLink          [s1] to [s3]
+        self.addLink(switch2, switch4)                                          ## addLink          [s2] to [s3]
+        self.addLink(switch3, switch4)                                          ## addLink          [s2] to [s3]
 
-        self.addLink(switch1, switch3)                                          ## addLink          [s1] to [s3]
-        self.addLink(switch2, switch3)                                          ## addLink          [s2] to [s3]
+        self.addLink(switch4, switch5)                                          ## addLink          [s2] to [s3]
 
 if __name__ == '__main__':
     """
