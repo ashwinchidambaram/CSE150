@@ -47,8 +47,6 @@ class Final (object):
     msg.data = packet_in
     action = of.ofp_action_output(port = of.OFPP_FLOOD)
     msg.actions.append(action)
-
-    # Send message to switch
     self.connection.send(msg)
 
   def _handle_PacketIn (self, event):
