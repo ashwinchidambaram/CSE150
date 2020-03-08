@@ -23,15 +23,15 @@ class final_topo(Topo):
         h1 = self.addHost('h1', mac='00:00:00:00:00:01', ip='10.0.1.101/24', defaultRoute="h1-eth0")                 ## Host 1
         h2 = self.addHost('h2', mac='00:00:00:00:00:02', ip='10.0.2.102/24', defaultRoute="h2-eth0")                 ## Host 2
         h3 = self.addHost('h3', mac='00:00:00:00:00:03', ip='10.0.3.103/24', defaultRoute="h3-eth0")                 ## Host 3
-        h4 = self.addHost('server', mac='00:00:00:00:00:04', ip='10.0.1.104/24', defaultRoute="s1-eth0")                 ## Server
+        h4 = self.addHost('server', mac='00:00:00:00:00:04', ip='10.0.4.104/24', defaultRoute="s1-eth0")                 ## Server
         h5 = self.addHost('h5', mac='00:00:00:00:00:05', ip='128.114.50.10/24', defaultRoute="h4-eth0")              ## Untrusted Host [4]
 
         #### Set up Switches ###################################################
-        s1 = self.addSwitch('Floor_1')                                                                             ## Adds Floor 1 Switch
-        s2 = self.addSwitch('Floor_2')                                                                             ## Adds Floor 2 Switch
-        s3 = self.addSwitch('Floor_3')                                                                             ## Adds Floor 3 Switch
-        s4 = self.addSwitch('Core')                                                                                ## Adds Core Switch
-        s5 = self.addSwitch('Data_Center')                                                                         ## Adds Data Center Switch
+        s1 = self.addSwitch('s1')                                                                             ## Adds Floor 1 Switch
+        s2 = self.addSwitch('s2')                                                                             ## Adds Floor 2 Switch
+        s3 = self.addSwitch('s3')                                                                             ## Adds Floor 3 Switch
+        s4 = self.addSwitch('s4')                                                                                ## Adds Core Switch
+        s5 = self.addSwitch('s5')                                                                         ## Adds Data Center Switch
 
         #### Link Switches & Hosts #############################################
 
