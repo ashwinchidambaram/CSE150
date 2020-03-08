@@ -44,6 +44,13 @@ class Final (object):
     #      (for example, s1 would have switch_id == 1, s2 would have switch_id == 2, etc...)
     print "Hello, World!"
 
+    msg.data = packet_in
+    action = of.ofp_action_output(port = of.OFPP_FLOOD)
+    msg.actions.append(action)
+
+    # Send message to switch
+    self.connection.send(msg)
+
   def _handle_PacketIn (self, event):
     """
     Handles packet in messages from the switch.
