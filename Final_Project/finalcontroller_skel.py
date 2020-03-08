@@ -41,14 +41,25 @@ class Final (object):
     # been made from Lab 4:
     #   - port_on_switch represents the port that the packet was received on.
     #   - switch_id represents the id of the switch that received the packet
-    #      (for example, s1 would have switch_id == 1, s2 would have switch_id == 2, etc...)
+    #      (for example, s1 would have switch_id == 1, s2 would have switch_id == 2, etc...)        # Variables
+
+    idle_timeout = 30                                                       # Time taken to timeout in seconds
+    hard_timeout = 60                                                       # Max time taken to timeout in seconds
+
+    msg = of.ofp_flow_mod()
+
+    # Match Packet
+    msg.match = of.ofp_match.from_packet(packet)
+
+    # Timeout timers
+    msg.idle_timeout = idle_timeout
+    msg.hard_timeout = hard_timeout
+
     print "Hello, World!"
 
     msg.data = packet_in
     action = of.ofp_action_output(port = of.OFPP_FLOOD)
     msg.actions.append(action)
-
-    # Send message to switch
     self.connection.send(msg)
 
   def _handle_PacketIn (self, event):

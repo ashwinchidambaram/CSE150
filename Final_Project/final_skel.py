@@ -20,37 +20,33 @@ class final_topo(Topo):
     def build(self):
 
         #### Set up Hosts ######################################################
-        h1 = self.addHost('h1', mac='00:00:00:00:00:01', ip='10.0.1.101/24', defaultRoute="h1-eth0")                 ## Host 1
-        h2 = self.addHost('h2', mac='00:00:00:00:00:02', ip='10.0.2.102/24', defaultRoute="h2-eth0")                 ## Host 2
-        h3 = self.addHost('h3', mac='00:00:00:00:00:03', ip='10.0.3.103/24', defaultRoute="h3-eth0")                 ## Host 3
-        h4 = self.addHost('h4', mac='00:00:00:00:00:04', ip='10.0.4.104/24', defaultRoute="h4-eth0")                 ## Server
-        h5 = self.addHost('h5', mac='00:00:00:00:00:05', ip='128.114.50.10/24', defaultRoute="h4-eth0")              ## Untrusted Host [4]
+        h1 = self.addHost('h1',mac='00:00:00:00:00:01',ip='10.0.1.101/24',defaultRoute="h1-eth0")
+        h2 = self.addHost('h2',mac='00:00:00:00:00:02',ip='10.0.2.102/24',defaultRoute="h2-eth0")
+        h3 = self.addHost('h3',mac='00:00:00:00:00:03',ip='10.0.3.103/24',defaultRoute="h3-eth0")
+        h4 = self.addHost('h4',mac='00:00:00:00:00:04',ip='128.114.50.10/24',defaultRoute="h4-eth0")
+        h5 = self.addHost('h5',mac='00:00:00:00:00:04',ip='10.0.4.104/24',defaultRoute="h5-eth0")
 
         #### Set up Switches ###################################################
         s1 = self.addSwitch('s1')                                                                             ## Adds Floor 1 Switch
         s2 = self.addSwitch('s2')                                                                             ## Adds Floor 2 Switch
         s3 = self.addSwitch('s3')                                                                             ## Adds Floor 3 Switch
         s4 = self.addSwitch('s4')                                                                                ## Adds Core Switch
-        s5 = self.addSwitch('s5')                                                                         ## Adds Data Center Switch
+        s5 = self.addSwitch('s5')
 
         #### Link Switches & Hosts #############################################
 
-        # Connect Port 8 on the Switch to Port 0 on Host 1 and Port 9 on the Switch to Port 0 on
-        # Host 2. This is representing the physical port on the switch or host that you are
-        # connecting to.
-
         # Link the Hosts to their relevent switches
-        self.addLink(h1, s1, port1=0, port2=1)
-        self.addLink(h2, s2, port1=0, port2=1)
-        self.addLink(h3, s3, port1=0, port2=1)
-        self.addLink(h4, s4, port1=0, port2=1)
-        self.addLink(h5, s5, port1=0, port2=1)
+        self.addLink(s1, h1, port1=8, port2=0)
+        self.addLink(s2, h2, port1=8, port2=0)
+        self.addLink(s3, h3, port1=8, port2=0)
+        self.addLink(s4, h4, port1=8, port2=0)
+        self.addLink(s5, h5, port1=8, port2=0)
 
         # Link to Core Switch
-        self.addLink(s1, s4, port1=3, port2=2)
-        self.addLink(s2, s4, port1=3, port2=3)
-        self.addLink(s3, s4, port1=3, port2=4)
-        self.addLink(s5, s4, port1=3, port2=5)
+        self.addLink(s1, s4, port1=3, port2=1)
+        self.addLink(s2, s4, port1=3, port2=2)
+        self.addLink(s3, s4, port1=3, port2=3)
+        self.addLink(s5, s4, port1=3, port2=4)
 
 def configure():
     topo = final_topo()
