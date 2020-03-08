@@ -40,17 +40,17 @@ class final_topo(Topo):
         # connecting to.
 
         # Link the Hosts to their relevent switches
-        self.addLink(host1, switch1, port1=1, port2=2)
-        self.addLink(host2, switch2, port1=1, port2=2)
-        self.addLink(host3, switch3, port1=1, port2=2)
-        self.addLink(host5, switch4, port1=1, port2=5)
-        self.addLink(host4, switch5, port1=1, port2=5)
+        self.addLink(host1, switch1, port1=0, port2=1)
+        self.addLink(host2, switch2, port1=0, port2=1)
+        self.addLink(host3, switch3, port1=0, port2=1)
+        self.addLink(host4, switch5, port1=0, port2=1)
+        self.addLink(host5, switch4, port1=0, port2=1)
 
         # Link to Core Switch
-        self.addLink(switch1, switch4, port1=3, port2=1)
-        self.addLink(switch2, switch4, port1=3, port2=2)
-        self.addLink(switch3, switch4, port1=3, port2=3)
-        self.addLink(switch5, switch4, port1=3, port2=4)
+        self.addLink(switch1, switch4, port1=3, port2=2)
+        self.addLink(switch2, switch4, port1=3, port2=3)
+        self.addLink(switch3, switch4, port1=3, port2=4)
+        self.addLink(switch5, switch4, port1=3, port2=5)
 
 def configure():
     topo = final_topo()
