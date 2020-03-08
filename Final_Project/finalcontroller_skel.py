@@ -211,10 +211,10 @@ class Final (object):
 
 def launch ():
     """
-      Starts the component
-      """
-      def start_switch (event):
-          log.debug("Controlling %s" % (event.connection,))
-          Final(event.connection)
+    Starts the component
+    """
+    def start_switch (event):
+        log.debug("Controlling %s" % (event.connection,))
+        Final(event.connection)
 
-      core.openflow.addListenerByName("ConnectionUp", start_switch)
+    core.openflow.addListenerByName("ConnectionUp", start_switch)
