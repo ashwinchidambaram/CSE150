@@ -82,12 +82,14 @@ class Final (object):
                     # Action to send to specified port
                     action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
                     msg.actions.append(action)
+                    self.connection.send(msg)
 
                 elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
 
                     # Action to send to specified port
                     action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 1 [h1]
                     msg.actions.append(action)
+                    self.connection.send(msg)
 
                 else:
                     print 'Unexpected Event @ Switch_ID 1'
@@ -100,12 +102,14 @@ class Final (object):
                     # Action to send to specified port
                     action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
                     msg.actions.append(action)
+                    self.connection.send(msg)
 
                 elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
 
                     # Action to send to specified port
                     action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 2 [h2]
                     msg.actions.append(action)
+                    self.connection.send(msg)
 
                 else:
                     print 'Unexpected Event @ Switch_ID 2'
@@ -118,12 +122,14 @@ class Final (object):
                     # Action to send to specified port
                     action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
                     msg.actions.append(action)
+                    self.connection.send(msg)
 
                 elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
 
                     # Action to send to specified port
                     action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 2 [h2]
                     msg.actions.append(action)
+                    self.connection.send(msg)
 
                 else:
                     print 'Unexpected Event @ Switch_ID 3'
