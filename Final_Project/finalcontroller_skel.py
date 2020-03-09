@@ -77,6 +77,8 @@ class Final (object):
             #### Switch 1 ######################################################
             if switch_id is 1:
 
+                msg.data = packet_in
+
                 if port_on_switch is 8:                                                 ## Traffic coming in from Host 1 [h1]
 
                     # Action to send to specified port
@@ -96,6 +98,8 @@ class Final (object):
 
             #### Switch 2 ######################################################
             elif switch_id is 2:
+
+                msg.data = packet_in
 
                 if port_on_switch is 8:                                                 ## Traffic coming in from Host 2 [h2]
 
@@ -117,6 +121,8 @@ class Final (object):
             #### Switch 3 ######################################################
             elif switch_id is 3:
 
+                msg.data = packet_in
+
                 if port_on_switch is 8:                                                 ## Traffic coming in from Host 2 [h2]
 
                     # Action to send to specified port
@@ -137,6 +143,8 @@ class Final (object):
             #### Switch 5 ######################################################
             elif switch_id is 5:
 
+                msg.data = packet_in
+
                 if port_on_switch is 8:                                                 ## Traffic coming in from Host 2 [h2]
 
                     # Action to send to specified port
@@ -156,6 +164,8 @@ class Final (object):
 
             #### Switch 4 ######################################################
             elif switch_id is 4:
+
+                msg.data = packet_in
 
                 if port_on_switch is 8:                                                 ## Traffic coming in from Host 2 [h2]
 
