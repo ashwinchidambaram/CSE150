@@ -135,10 +135,44 @@ class Final (object):
                     print 'Unexpected Event @ Switch_ID 3'
 
             #### Switch 5 ######################################################
-            #elif switch_id is 5:
+            elif switch_id is 5:
+
+                if port_on_switch is 8:                                                 ## Traffic coming in from Host 2 [h2]
+
+                    # Action to send to specified port
+                    action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
+                    msg.actions.append(action)
+                    self.connection.send(msg)
+
+                elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
+
+                    # Action to send to specified port
+                    action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 2 [h2]
+                    msg.actions.append(action)
+                    self.connection.send(msg)
+
+                else:
+                    print 'Unexpected Event @ Switch_ID 3'
 
             #### Switch 4 ######################################################
-            #elif switch_id is 4:
+            elif switch_id is 4:
+
+                if port_on_switch is 8:                                                 ## Traffic coming in from Host 2 [h2]
+
+                    # Action to send to specified port
+                    action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
+                    msg.actions.append(action)
+                    self.connection.send(msg)
+
+                elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
+
+                    # Action to send to specified port
+                    action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 2 [h2]
+                    msg.actions.append(action)
+                    self.connection.send(msg)
+
+                else:
+                    print 'Unexpected Event @ Switch_ID 3'
 
         else:                                                                   # if NOT IPv4
 
