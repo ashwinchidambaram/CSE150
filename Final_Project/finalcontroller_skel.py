@@ -127,7 +127,7 @@ class Final (object):
 
                     else:
                         self.connection.send(msg)
-                        print 'Unexpected Event @ Switch_ID 4 (CORE SWITCH)'
+                        print 'Unexpected Event @ Switch_ID 4 - ICMP (CORE SWITCH)'
 
                 elif (protocol_TCP is not None) and (protocol_IPv4 is not None):
 
@@ -181,7 +181,7 @@ class Final (object):
 
                     else:
                         self.connection.send(msg)
-                        print 'Unexpected Event @ Switch_ID 4 (CORE SWITCH)'
+                        print 'Unexpected Event @ Switch_ID 4 - TCP (CORE SWITCH)'
 
                 #### ARP Check #################################################
                 elif protocol_ARP is not None:
