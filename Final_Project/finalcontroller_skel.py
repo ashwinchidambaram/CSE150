@@ -119,7 +119,7 @@ class Final (object):
                         msg.IP_PROTO = 1
 
                         # Action to send to specified port
-                        action = of.ofp_action_output(port = 5)
+                        action = of.ofp_action_output(port = 4)
                         msg.actions.append(action)
 
                         # Send message to switch
@@ -173,7 +173,7 @@ class Final (object):
                         msg.IP_PROTO = 6                                                ###-1-###
 
                         # Action to send to specified port                              ###-2-###
-                        action = of.ofp_action_output(port = 5)
+                        action = of.ofp_action_output(port = 4)
                         msg.actions.append(action)
 
                         # Send message to switch
