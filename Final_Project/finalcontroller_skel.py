@@ -77,11 +77,11 @@ class Final (object):
 
     		if port_on_switch is 8: #from h1
     			msgAction = of.ofp_action_output(port = 3) #send to s4
-    			flowMsg.actions.append(msgAction)
+    			msg.actions.append(msgAction)
     			#print 'sent to s4'
     		elif port_on_switch is 3: #from s4
     			msgAction = of.ofp_action_output(port = 8) #send to h1
-    			flowMsg.actions.append(msgAction)
+    			msg.actions.append(msgAction)
     			#print 'sent to h1'
 
         # RAW TEST SCRIPT###############
