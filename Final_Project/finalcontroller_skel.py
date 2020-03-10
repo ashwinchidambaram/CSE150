@@ -128,7 +128,7 @@ class Final (object):
 
                 if port_on_switch is 8:
 
-                    if icmp is not None:
+                    if protocol_ICMP is not None:
                         self.connection.send(msg)
                         return
 
