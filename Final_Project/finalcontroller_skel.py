@@ -67,7 +67,11 @@ class Final (object):
     	protocol_ICMP = packet.find('icmp')
         protocol_IPv4 = packet.find('ipv4')
 
-        if protocol_IPv4 is not None:
+        if protocol_IPv4 is None:
+            action = of.ofp_action_output(port = of.OFPP_FLOOD)
+            msg.actions.append(action)
+
+        else:
 
             #### Switch 1 ######################################################
             if switch_id is 1:
@@ -122,13 +126,13 @@ class Final (object):
             #### Switch 4 ######################################################
             elif switch_id is 4:
 
-                if port_on_switch is 1:
+                if port_on_switch is 8:
 
                     if icmp is not None:
                         self.connection.send(msg)
                         return
 
-                    elif ip.dstip == untrustedHost_IP:
+                    elif ip.dstip == '128.114.50.10':
 
                         self.connection.send(msg)
                         return
@@ -147,7 +151,7 @@ class Final (object):
                         msg.actions.append(msgAction)
 
                 else:
-                    if ip.dstip == untrustedHost_IP:
+                    if ip.dstip == '128.114.50.10':
 
                         msgAction = of.ofp_action_output(port = 1)
                         msg.actions.append(msgAction)
@@ -171,13 +175,16 @@ class Final (object):
 
                         msgAction = of.ofp_action_output(port = 5)
                         msg.actions.append(msgAction)
-                        
+
         else:
         # RAW TEST SCRIPT###############
             #msg.data = packet_in
             action = of.ofp_action_output(port = of.OFPP_FLOOD)
             msg.actions.append(action)
             #self.connection.send(msg)
+
+        self.connection.send(msg)
+        return
 
     def _handle_PacketIn (self, event):
         """
