@@ -46,11 +46,6 @@ class Final (object):
         connection.addListeners(self)
 
     def do_final (self, packet, packet_in, port_on_switch, switch_id):
-        # This is where you'll put your code. The following modifications have
-        # been made from Lab 4:
-        #   - port_on_switch represents the port that the packet was received on.
-        #   - switch_id represents the id of the switch that received the packet
-        #      (for example, s1 would have switch_id == 1, s2 would have switch_id == 2, etc...)        # Variables
 
         idle_timeout = 30                                                               ## Time taken to timeout in seconds
         hard_timeout = 60                                                               ## Max time taken to timeout in seconds
@@ -84,7 +79,7 @@ class Final (object):
                 elif port_on_switch is 3:
                     msgAction = of.ofp_action_output(port = 8)
                     msg.actions.append(msgAction)
-
+                    
             #### Switch 2 ######################################################
             elif switch_id is 2:
 
@@ -127,7 +122,7 @@ class Final (object):
         				self.connection.send(msg)
         				#print 'icmp packet from h4 dropped'
         				return
-        			elif ip.dstip == untrustedHost_IP: #drop ip packet to h5 from h4
+        		elif ip.dstip == untrustedHost_IP: #drop ip packet to h5 from h4
         				self.connection.send(msg)
         				#print 'ip packet from h4 to h5 dropped'
         				return
