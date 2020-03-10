@@ -59,6 +59,7 @@ class Final (object):
 
         # Match Packet
         msg.match = of.ofp_match.from_packet(packet)
+        msg.data = packet_in
 
         # Timeout timers
         msg.idle_timeout = idle_timeout
@@ -72,99 +73,14 @@ class Final (object):
         protocol_IPv4 = packet.find('ipv4')
 
         #### IPv4 Check ########################################################
-        if protocol_IPv4 is not None:                                                   ## if IS IPv4
+        #if protocol_IPv4 is not None:                                                   ## if IS IPv4
 
-            #### Switch 4 ######################################################
-            if switch_id is 4:
+        #### Switch 4 ##########################################################
+        if switch_id is 4:
 
-                msg.data = packet_in
+            if port_on_switch = 8:
 
-                if (protocol_ICMP is not None) and (protocol_IPv4 is not None):
-
-                    if protocol_IPv4.dstip == '10.0.1.101':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 1)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif protocol_IPv4.dstip == '10.0.2.102':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 2)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif protocol_IPv4.dstip == '10.0.3.103':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif protocol_IPv4.dstip == '10.0.4.104':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 5)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    else:
-
-                        print 'Unexpected Event @ Switch_ID 4 (CORE SWITCH)'
-
-                elif (protocol_TCP is not None) and (protocol_IPv4 is not None):
-
-                    if protocol_IPv4.dstip == '10.0.1.101':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 1)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif protocol_IPv4.dstip == '10.0.2.102':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 2)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif protocol_IPv4.dstip == '10.0.3.103':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif protocol_IPv4.dstip == '10.0.4.104':
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 5)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    else:
-
-                        print 'Unexpected Event @ Switch_ID 4 (CORE SWITCH)'
-
-                #### ARP Check #################################################
-                elif protocol_ARP is not None:
+                if protocol_ARP is not None:
 
                     # Take in data packet
                     msg.data = packet_in
@@ -177,12 +93,88 @@ class Final (object):
                     msg.actions.append(action)
 
                     # Send message to switch
-                    #self.connection.send(msg)
+                    self.connection.send(msg)
 
-            #### Switch 1 ######################################################
-            elif switch_id is 1:
+            else:
 
-                msg.data = packet_in
+                if protocol_ICMP is not None:
+
+                    if protocol_IPv4.dstip == '10.0.1.101':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 1)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.2.102':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 2)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.3.103':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.4.104':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 5)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+                elif protocol_TCP is not None:
+
+                    if protocol_IPv4.dstip == '10.0.1.101':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 1)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.2.102':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 2)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.3.103':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.4.104':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 5)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.data = packet_in
+                        self.connection.send(msg)
+                        #msg.actions.append(action)
+                        #self.connection.send(msg)
+
+        #### Switch 1 ##########################################################
+        elif switch_id is 1:
 
                 if port_on_switch is 8:                                                 ## Traffic coming in from Host 1 [h1]
 
@@ -201,9 +193,6 @@ class Final (object):
                     self.connection.send(msg)
                     #msg.actions.append(action)
                     #self.connection.send(msg)
-
-                else:
-                    print 'Unexpected Event @ Switch_ID 1'
 
             #### Switch 2 ######################################################
             elif switch_id is 2:
@@ -228,9 +217,6 @@ class Final (object):
                     #msg.actions.append(action)
                     #self.connection.send(msg)
 
-                else:
-                    print 'Unexpected Event @ Switch_ID 2'
-
             #### Switch 3 ######################################################
             elif switch_id is 3:
 
@@ -254,9 +240,6 @@ class Final (object):
                     #msg.actions.append(action)
                     #self.connection.send(msg)
 
-                else:
-                    print 'Unexpected Event @ Switch_ID 3'
-
             #### Switch 5 ######################################################
             elif switch_id is 5:
 
@@ -279,9 +262,6 @@ class Final (object):
                     self.connection.send(msg)
                     #msg.actions.append(action)
                     #self.connection.send(msg)
-
-                else:
-                    print 'Unexpected Event @ Switch_ID 3'
 
         else:                                                                   # if NOT IPv4
 
