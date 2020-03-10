@@ -116,53 +116,62 @@ class Final (object):
                     msgAction = of.ofp_action_output(port = 8) #send to h1
                     msg.actions.append(msgAction)
 
+                else:
+                    return
+
             #### Switch 4 ######################################################
             elif switch_id is 4:
-    		#print 'ip at s4'
-        		if port_on_switch is 1:
-        			#from untrusted host h4 to server h5, drop
-        			if icmp is not None:
-        				self.connection.send(msg)
-        				#print 'icmp packet from h4 dropped'
-        				return
-        		elif ip.dstip == untrustedHost_IP: #drop ip packet to h5 from h4
-        				self.connection.send(msg)
-        				#print 'ip packet from h4 to h5 dropped'
-        				return
-        			elif ip.dstip == '10.0.1.101': #forward to h1
-        				msgAction = of.ofp_action_output(port = 1)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 1'
-        			elif ip.dstip == '10.0.2.102': #forward to h2
-        				msgAction = of.ofp_action_output(port = 2)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 2'
-        			elif ip.dstip == '10.0.3.103': #forward to h3
-        				msgAction = of.ofp_action_output(port = 3)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 3'
 
-        		else:
-        			if ip.dstip == untrustedHost_IP: #forward to h4
-        				msgAction = of.ofp_action_output(port = 1)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 4'
-        			elif ip.dstip == '10.0.1.101': #forward to h1
-        				msgAction = of.ofp_action_output(port = 2)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 1'
-        			elif ip.dstip == '10.0.2.102': #forward to h2
-        				msgAction = of.ofp_action_output(port = 3)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 2'
-        			elif ip.dstip == '10.0.3.103': #forward to h3
-        				msgAction = of.ofp_action_output(port = 4)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 3'
-        			elif ip.dstip == '10.0.4.104': #forward to h5
-        				msgAction = of.ofp_action_output(port = 5)
-        				msg.actions.append(msgAction)
-        				#print 'sent o host 5'
+                if port_on_switch is 1:
+
+                    if icmp is not None:
+                        self.connection.send(msg)
+                        return
+
+                    elif ip.dstip == untrustedHost_IP:
+
+                        self.connection.send(msg)
+                        return
+
+                    elif ip.dstip == '10.0.1.101':
+                        msgAction = of.ofp_action_output(port = 1)
+                        msg.actions.append(msgAction)
+
+                    elif ip.dstip == '10.0.2.102':
+                        msgAction = of.ofp_action_output(port = 2)
+                        msg.actions.append(msgAction)
+
+                    elif ip.dstip == '10.0.3.103':
+
+                        msgAction = of.ofp_action_output(port = 3)
+                        msg.actions.append(msgAction)
+
+                else:
+                    if ip.dstip == untrustedHost_IP:
+
+                        msgAction = of.ofp_action_output(port = 1)
+                        msg.actions.append(msgAction)
+
+                    elif ip.dstip == '10.0.1.101':
+
+                        msgAction = of.ofp_action_output(port = 2)
+                        msg.actions.append(msgAction)
+
+                    elif ip.dstip == '10.0.2.102':
+
+                        msgAction = of.ofp_action_output(port = 3)
+                        msg.actions.append(msgAction)
+
+                    elif ip.dstip == '10.0.3.103':
+
+                        msgAction = of.ofp_action_output(port = 4)
+                        msg.actions.append(msgAction)
+
+                    elif ip.dstip == '10.0.4.104':
+
+                        msgAction = of.ofp_action_output(port = 5)
+                        msg.actions.append(msgAction)
+                        
         else:
         # RAW TEST SCRIPT###############
             #msg.data = packet_in
