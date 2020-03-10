@@ -79,7 +79,7 @@ class Final (object):
                 elif port_on_switch is 3:
                     msgAction = of.ofp_action_output(port = 8)
                     msg.actions.append(msgAction)
-                    
+
             #### Switch 2 ######################################################
             elif switch_id is 2:
 
@@ -102,12 +102,15 @@ class Final (object):
                     msgAction = of.ofp_action_output(port = 8) #send to h1
                     msg.actions.append(msgAction)
 
+                else:
+                    return
+
             #### Switch 5 ######################################################
             elif switch_id is 5:
 
                 if port_on_switch is 8:
                     msgAction = of.ofp_action_output(port = 3) #send to s4
-    			    msg.actions.append(msgAction)
+                    msg.actions.append(msgAction)
 
                 elif port_on_switch is 3:
                     msgAction = of.ofp_action_output(port = 8) #send to h1
