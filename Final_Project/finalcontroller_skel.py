@@ -195,7 +195,7 @@ class Final (object):
 
                         self.connection.send(msg)
 
-                    elif (protocol_IPv4.dstip == '10.0.1.101')
+                    elif (protocol_IPv4.dstip == '10.0.1.101'):
 
                         # Action to send to specified port
                         action = of.ofp_action_output(port = 1)                             ## Send packet to port 8 of Host 1 [h1]
@@ -203,7 +203,7 @@ class Final (object):
                         msg.actions.append(action)
                         self.connection.send(msg)
 
-                    elif (protocol_IPv4.dstip == '10.0.2.102')
+                    elif (protocol_IPv4.dstip == '10.0.2.102'):
 
                         # Action to send to specified port
                         action = of.ofp_action_output(port = 2)                             ## Send packet to port 8 of Host 1 [h1]
@@ -211,7 +211,7 @@ class Final (object):
                         msg.actions.append(action)
                         self.connection.send(msg)
 
-                    elif (protocol_IPv4.dstip == '10.0.3.103')
+                    elif (protocol_IPv4.dstip == '10.0.3.103'):
 
                         # Action to send to specified port
                         action = of.ofp_action_output(port = 3)                             ## Send packet to port 8 of Host 1 [h1]
@@ -219,7 +219,7 @@ class Final (object):
                         msg.actions.append(action)
                         self.connection.send(msg)
 
-                    elif (protocol_IPv4.dstip == '10.0.4.104')
+                    elif (protocol_IPv4.dstip == '10.0.4.104'):
 
                         # Action to send to specified port
                         action = of.ofp_action_output(port = 5)                             ## Send packet to port 8 of Host 1 [h1]
