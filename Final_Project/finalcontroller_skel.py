@@ -79,17 +79,17 @@ class Final (object):
         msg.actions.append(action)
         self.connection.send(msg)
 
-        def _handle_PacketIn (self, event):
-            """
-            Handles packet in messages from the switch.
-            """
-            packet = event.parsed # This is the parsed packet data.
-            if not packet.parsed:
-              log.warning("Ignoring incomplete packet")
-              return
+    def _handle_PacketIn (self, event):
+        """
+        Handles packet in messages from the switch.
+        """
+        packet = event.parsed # This is the parsed packet data.
+        if not packet.parsed:
+          log.warning("Ignoring incomplete packet")
+          return
 
-            packet_in = event.ofp # The actual ofp_packet_in message.
-            self.do_final(packet, packet_in, event.port, event.dpid)
+        packet_in = event.ofp # The actual ofp_packet_in message.
+        self.do_final(packet, packet_in, event.port, event.dpid)
 
 def launch ():
     """
