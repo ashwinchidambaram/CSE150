@@ -71,190 +71,25 @@ class Final (object):
     	protocol_ICMP = packet.find('icmp')
         protocol_IPv4 = packet.find('ipv4')
 
-        #### TCP Check #########################################################
-        if protocol_TCP is not None:
-
-            # Check if IPv4
-            protocol_IPv4 = packet.find('ipv4')
-
-            if protocol_IPv4 is not None:
-                # Take in data packet
-                msg.data = packet_in
-
-                # Check if TCP type
-                msg.IP_PROTO = 6
-
-                #### Switch 1  #################################################
-                if switch_id is 1:
-
-                    if port_on_switch is 8:                                                 ## Traffic coming in from Host 1 [h1]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                #### Switch 2  #################################################
-                elif switch_id is 2:
-
-                    if port_on_switch is 8:                                                 ## Traffic coming in from Host 1 [h1]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                #### Switch 3  #################################################
-                elif switch_id is 3:
-
-                    if port_on_switch is 8:                                                 ## Traffic coming in from Host 1 [h1]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                #### Switch 5  #################################################
-                elif switch_id is 5:
-
-                    if port_on_switch is 8:                                                 ## Traffic coming in from Host 1 [h1]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                    elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-                        #msg.actions.append(action)
-                        #self.connection.send(msg)
-
-                #### Switch 4  #################################################
-                elif switch_id is 4:
-
-                    if (protocol_IPv4.srcip == untrustedHost_IP and protocol_IPv4.dstip == '10.0.1.101'):                                                 ## Traffic coming in from Host 1 [h1]
-
-                        self.connection.send(msg)
-
-                    elif (protocol_IPv4.srcip == untrustedHost_IP and protocol_IPv4.dstip == '10.0.2.102'):                                                 ## Traffic coming in from Host 1 [h1]
-
-                        self.connection.send(msg)
-
-                    elif (protocol_IPv4.srcip == untrustedHost_IP and protocol_IPv4.dstip == '10.0.3.103'):                                                 ## Traffic coming in from Host 1 [h1]
-
-                        self.connection.send(msg)
-
-                    elif (protocol_IPv4.srcip == untrustedHost_IP and protocol_IPv4.dstip == '10.0.4.104'):                                                 ## Traffic coming in from Host 1 [h1]
-
-                        self.connection.send(msg)
-
-                    elif (protocol_IPv4.dstip == '10.0.1.101'):
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 1)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-
-                    elif (protocol_IPv4.dstip == '10.0.2.102'):
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 2)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-
-                    elif (protocol_IPv4.dstip == '10.0.3.103'):
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
-
-                    elif (protocol_IPv4.dstip == '10.0.4.104'):
-
-                        # Action to send to specified port
-                        action = of.ofp_action_output(port = 5)                             ## Send packet to port 8 of Host 1 [h1]
-                        msg.data = packet_in
-                        msg.actions.append(action)
-                        self.connection.send(msg)
 
 
-            # If source/destination IP don't match condition, then just direct to switch
-            else:
-                # Send message to switch
-                self.connection.send(msg)
+        # RAW TEST SCRIPT###############
+        msg.data = packet_in
+        action = of.ofp_action_output(port = of.OFPP_FLOOD)
+        msg.actions.append(action)
+        self.connection.send(msg)
 
+        def _handle_PacketIn (self, event):
+            """
+            Handles packet in messages from the switch.
+            """
+            packet = event.parsed # This is the parsed packet data.
+            if not packet.parsed:
+              log.warning("Ignoring incomplete packet")
+              return
 
-
-        else:
-		self.connection.send(msg)
-
-    # RAW TEST SCRIPT###############
-    #msg.data = packet_in
-    #action = of.ofp_action_output(port = of.OFPP_FLOOD)
-    #msg.actions.append(action)
-    #self.connection.send(msg)
-
-    def _handle_PacketIn (self, event):
-        """
-        Handles packet in messages from the switch.
-        """
-        packet = event.parsed # This is the parsed packet data.
-        if not packet.parsed:
-          log.warning("Ignoring incomplete packet")
-          return
-
-        packet_in = event.ofp # The actual ofp_packet_in message.
-        self.do_final(packet, packet_in, event.port, event.dpid)
+            packet_in = event.ofp # The actual ofp_packet_in message.
+            self.do_final(packet, packet_in, event.port, event.dpid)
 
 def launch ():
     """
