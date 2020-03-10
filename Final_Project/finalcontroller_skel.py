@@ -132,46 +132,46 @@ class Final (object):
                         self.connection.send(msg)
                         return
 
-                    elif ip.dstip == '128.114.50.10':
+                    elif protocol_IPv4.dstip == '128.114.50.10':
 
                         self.connection.send(msg)
                         return
 
-                    elif ip.dstip == '10.0.1.101':
+                    elif protocol_IPv4.dstip == '10.0.1.101':
                         msgAction = of.ofp_action_output(port = 1)
                         msg.actions.append(msgAction)
 
-                    elif ip.dstip == '10.0.2.102':
+                    elif protocol_IPv4.dstip == '10.0.2.102':
                         msgAction = of.ofp_action_output(port = 2)
                         msg.actions.append(msgAction)
 
-                    elif ip.dstip == '10.0.3.103':
+                    elif protocol_IPv4.dstip == '10.0.3.103':
 
                         msgAction = of.ofp_action_output(port = 3)
                         msg.actions.append(msgAction)
 
                 else:
-                    if ip.dstip == '128.114.50.10':
+                    if protocol_IPv4.dstip == '128.114.50.10':
 
                         msgAction = of.ofp_action_output(port = 1)
                         msg.actions.append(msgAction)
 
-                    elif ip.dstip == '10.0.1.101':
+                    elif protocol_IPv4.dstip == '10.0.1.101':
 
                         msgAction = of.ofp_action_output(port = 2)
                         msg.actions.append(msgAction)
 
-                    elif ip.dstip == '10.0.2.102':
+                    elif protocol_IPv4.dstip == '10.0.2.102':
 
                         msgAction = of.ofp_action_output(port = 3)
                         msg.actions.append(msgAction)
 
-                    elif ip.dstip == '10.0.3.103':
+                    elif protocol_IPv4.dstip == '10.0.3.103':
 
                         msgAction = of.ofp_action_output(port = 4)
                         msg.actions.append(msgAction)
 
-                    elif ip.dstip == '10.0.4.104':
+                    elif protocol_IPv4.dstip == '10.0.4.104':
 
                         msgAction = of.ofp_action_output(port = 5)
                         msg.actions.append(msgAction)
