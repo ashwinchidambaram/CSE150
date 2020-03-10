@@ -176,11 +176,11 @@ class Final (object):
                         msgAction = of.ofp_action_output(port = 5)
                         msg.actions.append(msgAction)
 
-        else:
+            #else:
         # RAW TEST SCRIPT###############
             #msg.data = packet_in
-            action = of.ofp_action_output(port = of.OFPP_FLOOD)
-            msg.actions.append(action)
+                #action = of.ofp_action_output(port = of.OFPP_FLOOD)
+                #msg.actions.append(action)
             #self.connection.send(msg)
 
         self.connection.send(msg)
