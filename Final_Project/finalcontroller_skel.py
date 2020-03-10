@@ -38,8 +38,8 @@ class Final (object):
     A Connection object for that switch is passed to the __init__ function.
     """
     def __init__ (self, connection):
-        # Keep track of the connection to the switch so that we can
-        # send it messages!
+
+        # Keep track of the connection to the switch so that we can send it messages
         self.connection = connection
 
         # This binds our PacketIn event listener
@@ -74,8 +74,63 @@ class Final (object):
         #### IPv4 Check ########################################################
         if protocol_IPv4 is not None:                                                   ## if IS IPv4
 
+            #### Switch 4 ######################################################
+            if switch_id is 4:
+
+                msg.data = packet_in
+
+                if ((protocol_ICMP is not None) and (protocol_IPv4 is not None)) or ((protocol_TCP is not None) and (protocol_IPv4 is not None)):
+
+                    if protocol_IPv4.dstip == '10.0.1.101':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 1)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.actions.append(action)
+                        self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.2.102':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 2)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.actions.append(action)
+                        self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.3.103':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.actions.append(action)
+                        self.connection.send(msg)
+
+                    elif protocol_IPv4.dstip == '10.0.4.104':
+
+                        # Action to send to specified port
+                        action = of.ofp_action_output(port = 5)                             ## Send packet to port 3 of Core Switch [s4]
+                        msg.actions.append(action)
+                        self.connection.send(msg)
+
+                    else:
+
+                        print 'Unexpected Event @ Switch_ID 4 (CORE SWITCH)'
+
+                #### ARP Check #################################################
+                elif protocol_ARP is not None:
+
+                    # Take in data packet
+                    msg.data = packet_in
+
+                    # Check if ARP type
+                    msg.match.ETH_TYPE = 0x0806
+
+                    # Action to send to specified port
+                    action = of.ofp_action_output(port = of.OFPP_FLOOD)
+                    msg.actions.append(action)
+
+                    # Send message to switch
+                    self.connection.send(msg)
+
             #### Switch 1 ######################################################
-            if switch_id is 1:
+            elif switch_id is 1:
 
                 msg.data = packet_in
 
@@ -162,84 +217,10 @@ class Final (object):
                 else:
                     print 'Unexpected Event @ Switch_ID 3'
 
-            #### Switch 4 ######################################################
-            elif switch_id is 4:
-
-                msg.data = packet_in
-
-                if port_on_switch is 8:                                                 ## Traffic coming in from Host 2 [h2]
-
-                    # Action to send to specified port
-                    action = of.ofp_action_output(port = 3)                             ## Send packet to port 3 of Core Switch [s4]
-                    msg.actions.append(action)
-                    self.connection.send(msg)
-
-                elif port_on_switch is 3:                                               ## Traffic coming in from Core Switch [s4]
-
-                    # Action to send to specified port
-                    action = of.ofp_action_output(port = 8)                             ## Send packet to port 8 of Host 2 [h2]
-                    msg.actions.append(action)
-                    self.connection.send(msg)
-
-                else:
-                    print 'Unexpected Event @ Switch_ID 3'
-
         else:                                                                   # if NOT IPv4
 
             action = of.ofp_action_output(port = of.OFPP_FLOOD)
             self.connection.send(msg)
-
-
-
-
-        ### TCP Check ##########################################################
-        #if protocol_TCP is not None:
-
-
-            # Check if IPv4
-            #protocol_IPv4 = packet.find('ipv4')
-
-            #if protocol_IPv4 is not None:
-                # Take in data packet
-                #msg.data = packet_in
-#
-                # Check if TCP type
-                #msg.IP_PROTO = 6                                                ###-1-###
-
-                # Action to send to specified port                              ###-2-###
-                #action = of.ofp_action_output(port = of.OFPP_FLOOD)
-                #msg.actions.append(action)
-
-                # Send message to switch
-                #self.connection.send(msg)
-
-            # If source/destination IP don't match condition, then just direct to switch
-            #else:
-                # Send message to switch
-                #self.connection.send(msg)
-
-        #### ARP Check #########################################################
-        #elif protocol_ARP is not None:
-
-            # Take in data packet
-            #msg.data = packet_in
-
-            # Check if ARP type
-            #msg.match.ETH_TYPE = 0x0806                                          ###-1-###
-
-            # Action to send to specified port                                  ###-2-###
-            #action = of.ofp_action_output(port = of.OFPP_FLOOD)
-            #msg.actions.append(action)
-
-            # Send message to switch
-            #self.connection.send(msg)
-
-        ########################################################################
-        #else:
-		#self.connection.send(msg)
-
-######
-
 
     # RAW TEST SCRIPT###############
     #msg.data = packet_in
