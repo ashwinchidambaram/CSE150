@@ -287,11 +287,12 @@ class Final (object):
             action = of.ofp_action_output(port = of.OFPP_FLOOD)
             self.connection.send(msg)
 
-        # RAW TEST SCRIPT###############
-        #msg.data = packet_in
-        #action = of.ofp_action_output(port = of.OFPP_FLOOD)
-        #msg.actions.append(action)
-        #self.connection.send(msg)
+        ## RAW TEST SCRIPT######################################################
+        # msg.data = packet_in                                                 #
+        # action = of.ofp_action_output(port = of.OFPP_FLOOD)                  #
+        # msg.actions.append(action)                                           #
+        # self.connection.send(msg)                                            #
+        ########################################################################
 
     def _handle_PacketIn (self, event):
         """
